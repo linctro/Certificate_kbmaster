@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>認定証フォーム</title>
+</head>
+<body>
+  <h1>認定証発行</h1>
+  <input type="text" id="username" placeholder="名前を入力">
+  <button onclick="sendData()">送信</button>
+  <pre id="result"></pre>
+
+  <script>
+    async function sendData() {
+      const name = document.getElementById("username").value;
+
+      const response = await fetch("/certificate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username: name }),
+      });
+
+      const data = await response.json();
+      document.getElementById("result").textContent = JSON.stringify(data, null, 2);
+    }
+  </script>
+</body>
+</html>
